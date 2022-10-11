@@ -1,10 +1,10 @@
 import java.awt.*;
-import java.util.ArrayList;;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Snake{
 
-    private List<Point> body = new ArrayList<>();
+    private java.util.List<Point> body = new ArrayList<>();
     private Point head;
     private Point tail;
     private int size;
@@ -23,15 +23,9 @@ public class Snake{
         return head;
     }
 
-    public Point getTail() {
-        return tail;
-    }
-
     public int getSnakeSize() {
         return size;
     }
-
-    public void setSize(int size) { this.size = size;}
 
     public void setHead(Point head) {
         this.head = head;

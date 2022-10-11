@@ -1,2 +1,2 @@
 # Snake
-First Java project to get acostumed to it.
+First Java project to get accustomed to it.

@@ -31,11 +31,9 @@ public class GUI extends JFrame {
         frame.setSize(800, 900);
         frame.setLayout(new BorderLayout());
 
-
         panel = new Logic();
         score = new JPanel();
         scoreNumber = new JLabel();
-
 
         score.setPreferredSize(new Dimension(800, 100));
         score.setLayout(new GridBagLayout());
@@ -43,19 +41,17 @@ public class GUI extends JFrame {
         score.add(scoreNumber);
         scoreNumber.setFont(new Font("Arial", Font.BOLD, 20));
 
-
         panel.addKeyListener(panel);
         panel.setLayout(new BorderLayout());
         panel.setFocusable(true);
-
 
         frame.add(score, BorderLayout.NORTH);
         frame.add(panel, BorderLayout.SOUTH);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.pack();
+        frame.setResizable(false);
         frame.setVisible(true);
         panel.requestFocusInWindow();
-
 
         timer = new Timer(50, new ActionListener() {
             @Override
@@ -83,7 +79,7 @@ public class GUI extends JFrame {
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                frame.dispose();
             }
         });
 
@@ -98,20 +94,14 @@ public class GUI extends JFrame {
         });
 
         gameOver = new JPanel();
-        gameOver.setPreferredSize(new Dimension(panel.getWIDTH(), panel.getHEIGHT()));
+        gameOver.setPreferredSize(new Dimension(Logic.WIDTH, Logic.HEIGHT));
         gameOver.setLayout(null);
         gameOver.setBackground(Color.BLACK);
 
-        //GridBagConstraints gbc = new GridBagConstraints();
-        //gbc.insets = new Insets(0,20,0,0);
-
-
-        //exit.setPreferredSize(new Dimension(200, 50));
         exit.setText("Exit");
         exit.setBounds(450, 450, 100, 50);
         gameOver.add(exit);
 
-        //restart.setPreferredSize(new Dimension(200, 50));
         restart.setText("Restart");
         restart.setBounds(250, 450, 100, 50);
         gameOver.add(restart);
@@ -122,7 +112,6 @@ public class GUI extends JFrame {
         gameOverMesasge.setForeground(Color.red);
         gameOverMesasge.setBounds(320, 100, 500, 50);
         gameOver.add(gameOverMesasge);
-
 
         frame.remove(panel);
         frame.add(gameOver);

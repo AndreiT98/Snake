@@ -3,24 +3,26 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.List;
 import java.util.Random;
 
 public class Logic extends JPanel implements KeyListener {
 
+    public static final int SIZE = 10;
+    public static final Point SNAKESTART = new Point(0, 40);
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 800;
+    public static final int WALLUP = 0;
+    public static final int WALLDOWN = HEIGHT - SIZE;
+    public static final int WALLLEFT = 0;
+    public static final int WALLRIGHT = WIDTH - SIZE;
+
 
     // Variables
+
+
     private Snake snake;
     private Apple apple;
     private boolean inGame = true;
-    private final int SIZE = 10;
-    private final Point SNAKESTART = new Point(0, 40);
-    private final int WIDTH = 800;
-    private final int HEIGHT = 800;
-    private final int WALLUP = 0;
-    private final int WALLDOWN = HEIGHT - SIZE;
-    private final int WALLLEFT = 0;
-    private final int WALLRIGHT = WIDTH - SIZE;
     private char invalidMove = (char) 0;
     private char direction = (char) 0;
     private int score;
@@ -36,9 +38,9 @@ public class Logic extends JPanel implements KeyListener {
     // Responsible for initializing important Objects/parameters.
     public void init() {
         Border border = BorderFactory.createLineBorder(Color.gray);
-        this.setBorder(border);
-        this.setBackground(Color.black);
-        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setBorder(border);
+        setBackground(Color.black);
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         snake = new Snake(SIZE);
         apple = new Apple(SIZE);
@@ -63,18 +65,18 @@ public class Logic extends JPanel implements KeyListener {
     public void createNewApple() {
         int x = number.nextInt((WIDTH - SIZE) / SIZE) * SIZE;
         int y = number.nextInt((HEIGHT - SIZE) / SIZE) * SIZE;
-        this.score++;
         Point point = new Point(x, y);
-        boolean tmp = true;
-        while (tmp) {
-            if (snake.getBody().contains(point) == false) {
-                apple.appleSetX(x);
-                apple.appleSetY(y);
-                tmp = false;
-            }
 
+        if (!snake.getBody().contains(point)) {
+            apple.appleSetX(x);
+            apple.appleSetY(y);
+            score++;
+        } else {
+            createNewApple();
         }
+
     }
+
 
     // Method moves the Snake depending on the flags set by the Key listener
     public void moveSnake() {
@@ -119,7 +121,7 @@ public class Logic extends JPanel implements KeyListener {
 
         snake.setHead(snake.getBody().get(0));
         snake.setTail(snake.getBody().get(snake.getBody().size() - 1));
-        this.repaint();
+        repaint();
     }
 
     // Method checks for self-collision
@@ -133,7 +135,7 @@ public class Logic extends JPanel implements KeyListener {
         return false;
     }
 
-    // Method checks if Apple has been eaten and creates a new Apple if true, dynamically adjusts the apple
+    // Method checks if Apple has been eaten and creates a new Point for the Snake if true, dynamically adjusts the Point
     // with help of the moveSnake() method.
     public boolean appleEaten() {
         if (snake.getHead().x == apple.getX() && snake.getHead().getY() == apple.getY()) {
@@ -203,21 +205,7 @@ public class Logic extends JPanel implements KeyListener {
     }
 
     //GETTER
-    public List<Point> getSnakeBody() {
-        return snake.getBody();
-    }
 
-    public char getInvalidMove() {
-        return invalidMove;
-    }
-
-    public char getDirection() {
-        return direction;
-    }
-
-    public Snake getSnake() {
-        return snake;
-    }
 
     public boolean isInGame() {
         return inGame;
@@ -226,22 +214,20 @@ public class Logic extends JPanel implements KeyListener {
     public int getScore() {
         return score;
     }
-    public int getWIDTH() {return WIDTH;}
 
-    public int getHEIGHT() {return HEIGHT;}
 
     //SETTER
 
-    public void setDirection(char direction) {
-        this.direction = direction;
+    public void setDirection(char dir) {
+        direction = dir;
     }
 
     public void setInvalidMove(char c) {
-        this.invalidMove = c;
+        invalidMove = c;
     }
 
-    public void setInGame(boolean inGame) {
-        this.inGame = inGame;
+    public void setInGame(boolean status) {
+        inGame = status;
     }
 
 }
