@@ -1,2 +1,2 @@
 # Snake
-First Java project to get accustomed to it.
+Recreating the classic Snake game in Java using Swing as a GUI.
